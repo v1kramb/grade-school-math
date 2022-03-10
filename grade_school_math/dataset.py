@@ -15,6 +15,7 @@ def get_examples(split):
 
     for ex in examples:
         ex.update(question=ex["question"] + "\n")
+        ex.update(steps=ex["steps"] + "\n")
         ex.update(answer=ex["answer"] + "<|endoftext|>")
 
     print(f"{len(examples)} {split} examples")
@@ -46,8 +47,12 @@ class GSMDataset(th.utils.data.Dataset):
         self.examples = examples
         self.qns = [ex["question"] for ex in self.examples]
         self.ans = [ex["answer"] for ex in self.examples]
+        self.steps = [ex["steps"] for ex in self.examples]
+
         self.qns = tokenizer(self.qns, padding=False)
         self.ans = tokenizer(self.ans, padding=False)
+        self.steps = tokenizer(self.steps, padding=False)
+        
         self.loss_on_prefix = loss_on_prefix
         self.max_len = max(
             [

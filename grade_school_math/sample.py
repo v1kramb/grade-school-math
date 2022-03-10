@@ -11,7 +11,7 @@ def main():
     model.to(device)
     print("Model Loaded")
 
-    test_examples = get_examples("test")
+    test_examples = get_examples("a_test")
     qn = test_examples[1]["question"]
     sample_len = 100
     print(qn.strip())

@@ -1,6 +1,6 @@
 import torch as th
 from dataset import get_examples, GSMDataset
-from transformers import GPT2Tokenizer, GPT2LMHeadModel, GPTNeoForCasualLM
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, GPTNeoForCausalLM
 from transformers import GPT2Config, AdamW
 from transformers import get_scheduler
 from tqdm.auto import tqdm
@@ -9,11 +9,12 @@ from torch.utils.data import DataLoader
 
 def main():
     tokenizer = GPT2Tokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
-    train_examples = get_examples("train")
+    train_examples = get_examples("a_train")
     train_dset = GSMDataset(tokenizer, train_examples)
+    print(train_dset.steps)
 
     device = th.device("cuda")
-    model = GPTNeoForCasualLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
+    model = GPTNeoForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
     model.to(device)
     model.train()
 
